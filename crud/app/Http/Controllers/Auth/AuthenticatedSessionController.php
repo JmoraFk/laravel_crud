@@ -49,7 +49,10 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
-        return redirect('/');
+        Log::info("Entro a la vista de logout");
+        // return redirect('/');
+        return response()->json([
+            "status" => 200
+        ]);
     }
 }

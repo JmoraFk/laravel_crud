@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +23,9 @@ class ProductController extends Controller
     {
         //
         $products = Product::all();
-        return response()->json($products);
+        return response()->json([
+            "products" => $products
+        ]);
     }
 
     /**
@@ -44,8 +47,23 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        Log::info($request);
-        $product = Product::create($request->post());
+        $data = $request->post();
+        $user = $request->user();
+        Log::info($data);
+        Log::info($user);
+        if(!$user){
+            $user = User::where("id", 1)->first();
+            Log::info("Se toma el primer usuario por defecto");
+        }
+        Log::info($user);
+        $product = new Product;
+        $product = Product::create([
+            "name" => $data["name"],
+            "description" => $data["description"],
+            "price" => $data["price"],
+            "created_by" => $user->id
+        ]);
+        Log::info("Se ha creado correctamente el producto");
         return response()->json([
             "product" => $product
         ]);

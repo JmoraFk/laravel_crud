@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::view("/", "auth.login");
+Route::view("/", "auth.login");
 
 Route::get("{any}", function(){
     return view("crud");
-});
+})->where('any', 'product.*');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

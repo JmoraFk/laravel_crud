@@ -2,14 +2,20 @@
 export default {
   data() {
     return {
-      greeting: 'Hello World!'
+      greeting: 'Contac Vue'
     }
   }
 }
 </script>
 
 <template>
-  <p class="greeting">{{ greeting }}</p>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col text-center">
+        <h1>Componente <span class="badge bg-primary">CONTACTO</span></h1>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>

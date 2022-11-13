@@ -10,24 +10,24 @@ const ProductCreate = () => import("./components/product/Create.vue");
 export const routes = [
     {
         name: "home",
-        path: "/home",
+        path: "/product_home",
         component: Home,
     },
     {
         name: "contact",
-        path: "/contact",
+        path: "/product_contact",
         component: Contact
     },{
-        name: "products_show",
-        path: "/products",
+        name: "product_show",
+        path: "/product_list",
         component: ProductShow
     },{
         name: "product_edit",
-        path: "/edit",
+        path: "/product_edit",
         component: ProductEdit
     },{
         name: "product_create",
-        path: "/create",
+        path: "/product_create",
         component: ProductCreate
     }
 ];

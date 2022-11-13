@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      greeting: 'Hello World!'
+      greeting: 'Home Vue'
     }
   }
 }
@@ -10,7 +10,6 @@ export default {
 
 <template>
   <p class="greeting">{{ greeting }}</p>
-  <h1>Hola mundo</h1>
 </template>
 
 <style>
