@@ -51,7 +51,7 @@
             async create_product(){
                 await this.axios.post("/api/product", this.product)
                     .then(response => {
-                        this.$router.push({name:"show_products"});
+                        this.$router.push({name:"product_show"});
                     })
                     .catch(error => {
                         console.log(error);
