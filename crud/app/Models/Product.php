@@ -10,7 +10,13 @@ class Product extends Model
     use HasFactory;
     protected $table = "products";
     protected $default = [];
-    protected $fillable = [];
+    protected $fillable = [
+        "name",
+        "description",
+        "price",
+        "created_by",
+        "last_updated",
+    ];
     protected $cast = [];
 
     

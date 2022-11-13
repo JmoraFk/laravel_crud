@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
+
+    // Install 
+    // npm i vue vue-routers vue-axios
+    // npm run dev
+    // php artisan make:model Product mcr
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,8 @@ class ProductController extends Controller
     public function index()
     {
         //
-        return view("crud");
+        $products = Product::all();
+        return response()->json($products);
     }
 
     /**
@@ -37,6 +44,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        Log::info($request);
+        $product = Product::create($request->post());
+        return response()->json([
+            "product" => $product
+        ]);
     }
 
     /**
@@ -47,7 +59,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        Log::info("Product object => {$product}");
+        return response()->json([
+            "product" => $product
+        ]);
     }
 
     /**
@@ -70,7 +85,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $user = $request->user();
+        $now = date('Y-m-d H:i:s');
+        $product->fill($request->post());
+        $product->last_updated = $now;
+        $product->updated_by = $user;
+        $product->save();
+        Log::info("La informacion del producto ha sido actualizada");
+        return response()->json([
+            "product" => $product
+        ]);
     }
 
     /**
@@ -82,5 +106,12 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        $product_name = $product->name;
+        $product->delete();
+        $message = "Producto '{$product_name}' eliminado correctamente"; 
+        Log::info($message);
+        return response()->json([
+            "message" => $message
+        ]);
     }
 }

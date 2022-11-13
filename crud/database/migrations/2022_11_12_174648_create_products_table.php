@@ -21,10 +21,12 @@ return new class extends Migration
             $table->float("price", 2, 2);
             $table->float("presentation")->nullable();
             $table->foreignIdFor(User::class, "created_by")->onDelete("cascade");
+            $table->foreignidFor(User::class, "updated_by")->onDelete("cascade")->nullable();
             $table->datetime("created", $presicion=0)->useCurrent();
             $table->datetime("last_updated", $presicion=0)->nullable();
             $table->enum("stock_status", ["A", "S"])->default("A");
             $table->bigInteger("total_stock")->default(0);
+            // $table->string("prueba", 100);
         });
     }
 
@@ -35,6 +37,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        // Schema::dropColumn("products", "prueba");
+        Schema::dropIfExists("products");
     }
 };

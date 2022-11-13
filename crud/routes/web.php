@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,21 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::view("/", "auth.login");
+
+Route::get("{any}", function(){
+    return view("crud");
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource("/product",  ProductController::class)->names([
-    "index" => "product_get",
-    "create" => "product_add",
-    "store" => "product_post",
-    "show" => "product_show",
-    "edit" => "product_edit",
-    "update" => "product_update",
-    "destroy" => "product_destroy"
-])->only([
-    "index",
-    "create",
-    "store"
-]);
+require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
