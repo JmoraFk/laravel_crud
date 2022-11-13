@@ -22,19 +22,12 @@ const router = createRouter({
 
 console.log("Se ejecuta");
 
-const app = createApp({
-    el: "#crud_div_app", //Elemento div con id app
-    render: h => h(App)
-});
-
+const app = createApp(App);
+console.log(App);
 app.use(router);
 app.use(VueAxios, axios);
+app.mount("#crud_div_app");
+// app.component("App", App);
 
 
 console.log("A huevo");
-
-export default {
-    components: {
-      App
-    }
-  }

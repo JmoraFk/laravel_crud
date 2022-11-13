@@ -1,15 +1,9 @@
 <script>
-// import HomeLink from './components/HomeLink.vue'
-
-export default {
-    // name: 'App',
-    // components: {
-        // HomeLink
-    // }
-}
 </script>
 
 <template>
-    <div id="crud_div_app">
-    </div>
+  <h1>Hola mundo</h1>
 </template>
+
+<style>
+</style>
