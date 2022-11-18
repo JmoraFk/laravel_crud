@@ -9,6 +9,11 @@ export default {
     data(){
         return{
             products: [],
+            items_page: 10,
+            paginate_data: [],
+            current_page: 1,
+            previous_disabled: true,
+            next_disabled: false
         }
     },
     mounted(){
@@ -18,12 +23,13 @@ export default {
         async show_products(){
             await this.axios.get("api/product")
                 .then(response => {
-                    this.products = response.data;
+                    this.products = response.data.products;
                 })
                 .catch(error => {
                     this.products = [];
                     console.error(error);
                 });
+            this.getDataPage(1);
         },
         delete_product(product_id){
             console.log(product_id);
@@ -37,6 +43,44 @@ export default {
                         console.log(error);
                     });
             }
+        },
+        calculate_page_total(){ //Obtener el total de paginas
+            return Math.ceil(this.products.length / this.items_page);
+        },
+        getDataPage(page_num){
+            let start = (page_num * this.items_page) - this.items_page;
+            let end = (page_num * this.items_page);
+            let total_pages = this.calculate_page_total();
+            this.paginate_data = this.products.slice(start, end);
+            this.current_page = page_num;
+            
+            if((this.current_page + 1) >  total_pages){
+                this.next_disabled = true;
+            }
+            else{
+                this.next_disabled = false;
+            }
+
+            if((this.current_page -1) < 1){
+                this.previous_disabled = true;
+            }
+            else{
+                this.previous_disabled = false;
+            }
+        },
+        getPreviousPage(){
+            let previous_page = this.current_page - 1;
+            this.getDataPage(previous_page);
+        },
+        getNextPage(){
+            let next_page = this.current_page + 1;
+            let total_pages = this.calculate_page_total();
+            this.getDataPage(next_page);
+        },
+    },
+    computed: {
+        get_products(){
+            return this.products;
         }
     }
 }
@@ -66,6 +110,17 @@ export default {
                             <table-row :id="product.id" :name="product.name" :description="product.description" :price="product.price"/>
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                          <li :class="[{'disabled': previous_disabled}, 'page-item']">
+                            <a @click="getPreviousPage()" class="page-link" href="#" tabindex="-1">Previous</a>
+                          </li>
+                          <li class="page-item" v-for="item in calculate_page_total()" :key="item" @click="getDataPage(item)"><a class="page-link" href="#">{{ item }}</a></li>
+                          <li v-bind:class="[{'disabled': next_disabled}, 'page-item']">
+                            <a @click="getNextPage()" class="page-link" href="#">Next</a>
+                          </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
