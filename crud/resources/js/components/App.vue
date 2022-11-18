@@ -38,6 +38,9 @@ export default {
                         <li class="nav-item">
                             <router-link exact-active-class="active" to="/product_contact" class="nav-link active">Contacto</router-link>
                         </li>
+                        <label for="nav-item">
+                            <router-link exact-active-class="active" :to="{name: 'forms_url'}" class="nav-link active">Forms</router-link>
+                        </label>
                         <li class="nav-item">
                             <form method="POST" @submit.prevent="logout_session">
                                 <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
@@ -59,8 +62,8 @@ export default {
 </template>
 
 <style>
-.greeting {
-    color: red;
-    font-weight: bold;
-}
+    .greeting {
+        color: red;
+        font-weight: bold;
+    }
 </style>

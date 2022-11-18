@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = "products";
-    protected $default = [];
+    protected $attributes = [];
     protected $fillable = [
         "name",
         "description",
@@ -20,5 +20,5 @@ class Product extends Model
     ];
     protected $cast = [];
 
-    
+
 }

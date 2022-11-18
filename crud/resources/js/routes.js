@@ -1,11 +1,12 @@
-const Contact = () => import("./components/Contact.vue");
-const Home = () => import("./components/Home.vue");
+import Contact from "./components/Contact.vue";
+import Home from "./components/Home.vue";
 
 // Componentes para el producto
 
-const ProductShow = () => import("./components/product/Show.vue");
-const ProductEdit = () => import("./components/product/Edit.vue");
-const ProductCreate = () => import("./components/product/Create.vue");
+import ProductShow from "./components/product/Show.vue";
+import ProductEdit from "./components/product/Edit.vue";
+import ProductCreate from "./components/product/Create.vue";
+import Forms from './components/Forms.vue';
 
 export const routes = [
     {
@@ -29,5 +30,10 @@ export const routes = [
         name: "product_create",
         path: "/product_create",
         component: ProductCreate
+    },
+    {
+        name: "forms_url",
+        path: "/product_forms",
+        component: Forms
     }
 ];

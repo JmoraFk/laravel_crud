@@ -29,7 +29,7 @@ export default defineConfig({
         alias: [
             {
                 find: '@',
-                replacement: 'src',
+                replacement: 'resources/',
             },
         ],
         extensions: ['.vue', '.js']

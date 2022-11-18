@@ -1,6 +1,11 @@
 <script>
+import TableRow from "../extra_components/Row.vue";
+
 export default {
     name: "products",
+    components: {
+        TableRow
+    },
     data(){
         return{
             products: [],
@@ -57,18 +62,8 @@ export default {
                                 <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-
-                            <tr v-for="product in products.products" :key="product.id">
-                                <td>{{ product.id }}</td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.description }}</td>
-                                <td>{{ product.price }}</td>
-                                <td>
-                                    <router-link :to='{name:"product_edit", params:id,  query: { id: product.id }}' class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></router-link>
-                                    &nbsp;<a type="button" @click="delete_product(product.id)" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
+                        <tbody v-for="product in products.products" :key="product.id">
+                            <table-row :id="product.id" :name="product.name" :description="product.description" :price="product.price"/>
                         </tbody>
                     </table>
                 </div>

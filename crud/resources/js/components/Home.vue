@@ -1,8 +1,35 @@
 <script>
+
+import CardElement from './extra_components/Card.vue';
+
 export default {
+  components: {
+    CardElement
+  },
   data() {
     return {
-      greeting: 'Contac Vue'
+      products: [],
+    }
+  },
+  mounted() {
+    this.get_products();
+  },
+  methods: {
+    async get_products(){
+      let api_url = "api/product";
+      await this.axios.get(api_url)
+      .then(response => {
+        this.products = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  },
+  computed: {
+    default_cards(){
+      console.log("Esta tomando la información de cache");
+      return this.products.products;
     }
   }
 }
@@ -12,7 +39,11 @@ export default {
   <div class="container mt-4">
     <div class="row">
       <div class="col text-center">
-        <h1>Componente <span class="badge bg-danger">HOME</span></h1>
+        <ul>
+          <li v-for="product in default_cards" :key="product.id">
+            <CardElement :price="product.price" :name="product.name" :description="product.description"></CardElement>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
