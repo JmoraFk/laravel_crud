@@ -106,7 +106,7 @@ export default {
                                 <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tbody v-for="product in products.products" :key="product.id">
+                        <tbody v-for="product in paginate_data" :key="product.id">
                             <table-row :id="product.id" :name="product.name" :description="product.description" :price="product.price"/>
                         </tbody>
                     </table>

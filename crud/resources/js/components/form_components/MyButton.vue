@@ -1,5 +1,5 @@
 <template>
-    <button @click="$emit('validate')" type="submit" :class="['btn', btn_class]" :disabled="disabled">{{ btn_txt }}</button>
+    <button type="submit" :class="['btn', btn_class]" :disabled="disabled">{{ btn_txt }}</button>
 </template>
 
 <script>
@@ -10,13 +10,6 @@
                 message: "Hola mundo"
             }
         },
-        // emits: {
-            // validate(username, password){
-                // console.log("Validate desde el boton");
-                // console.log(username);
-                // console.log(password);
-            // }
-        // },
         props: {
             btn_txt: {
                 type: String,

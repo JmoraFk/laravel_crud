@@ -5,24 +5,26 @@
                 <div class="card-header"><strong>Validar Formulario</strong></div>
                 <div class="card-body">
                     <div class="col-12">
-                        <div class="form-group">
-                            <my-input 
-                            :name="'Username'" 
-                            :rules="{required: true, min: 5}" 
-                            :value="username.value"
-                            @update="update"
-                            ></my-input>
-                            <my-input 
-                            :name="'Password'" 
-                            :input_type="'password'" 
-                            :rules="{required: true, min: 10}" 
-                            :value="password.value"
-                            @update="update"
-                            ></my-input>
-                        </div>
+                        <form @submit.prevent="send_form">
+                            <div class="form-group">
+                                <my-input 
+                                    :name="'Username'" 
+                                    :rules="{required: true, min: 5}" 
+                                    :value="username.value"
+                                    @update="update"
+                                ></my-input>
+                                <my-input 
+                                    :name="'Password'" 
+                                    :input_type="'password'" 
+                                    :rules="{required: true, min: 10}" 
+                                    :value="password.value"
+                                    @update="update"
+                                ></my-input>
+                                <form-button :btn_txt="'Validar'" :disabled="!is_form_valid"></form-button>
+                            </div>
+                        </form>
                     </div>
                     <br>
-                    <form-button @validate="validate_fields" :btn_txt="'Validar'" :disabled="!is_valid"></form-button>
                 </div>
             </div>
         </div>
@@ -41,25 +43,41 @@
         data(){
             return {
                 message: "Form component",
-                is_valid: true,
                 username: {
                     value: '',
-                    valid: false
+                    valid: false,
                 },
                 password: {
                     value: '',
-                    valid: false
+                    valid: false,
                 }
             }
         },
         methods: {
             update(payload){
-                this[payload.name.toLowerCase()].value = payload.value;
+                let name = payload.name.toLowerCase();
+                let element;
+                if(name === "username"){
+                    element = this.username;
+                }
+                else if (name === "password"){
+                    element = this.password;
+                }
+                element.value = payload.value;
+                element.valid = payload.validar;
             },
-            validate_fields(){
-                let username = document.querySelector("#nombre").value;
-                let password = document.querySelector("#password").value;
-                console.log(username);
+            send_form(event){
+                const default_object = {
+                    value: '',
+                    valid: false
+                }
+                this.username = this.password = default_object;
+                alert("Formulario enviado");
+            }
+        },
+        computed: {
+            is_form_valid(){
+                return (this.username.valid && this.password.valid);
             }
         }
     }
@@ -69,5 +87,9 @@
 <style scoped>
     h1{
         color: red;
+    }
+
+    form{
+        border: 1rem ;
     }
 </style>

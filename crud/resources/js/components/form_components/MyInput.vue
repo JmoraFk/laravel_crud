@@ -3,7 +3,16 @@
         <div>
             <p class="label"><label :for="name" v-text="name"></label><span :class="['error',]" v-text="validate_input"></span></p>
         </div>
-        <input @input="$emit('update', {value: $event.target.value, name: name} )" :id="name.toLowerCase()" :type="input_type" :class="['form-control']" :placeholder="name" :value="value">
+        <input 
+            @input="$emit('update', {
+                value: $event.target.value,
+                name: name,
+                validar: validate($event.target.value) ? false : true,
+            } )" 
+            :id="name.toLowerCase()" :type="input_type" :class="['form-control']" 
+            :placeholder="name" 
+            :value="value"
+        >
     </div>
 </template>
 
@@ -44,10 +53,9 @@
                     return 'Campo Requerido';
                 }
 
-                if(this.rules.min > value.length){
+                if(this.rules.min > value.length && this.rules.required){
                     return 'Debe tener minimo ' + this.rules.min + ' caracteres';
                 }
-                return '';
             }
         }
     }
