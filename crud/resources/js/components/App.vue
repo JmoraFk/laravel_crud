@@ -41,6 +41,9 @@ export default {
                         <label for="nav-item">
                             <router-link exact-active-class="active" :to="{name: 'forms_url'}" class="nav-link active">Forms</router-link>
                         </label>
+                        <label for="nav-item">
+                            <router-link exact-active-class="active" :to="{name: 'notes_url'}" class="nav-link active">Notes</router-link>
+                        </label>
                         <li class="nav-item">
                             <form method="POST" @submit.prevent="logout_session">
                                 <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">

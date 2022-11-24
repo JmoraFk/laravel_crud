@@ -7,6 +7,7 @@ import ProductShow from "./components/product/Show.vue";
 import ProductEdit from "./components/product/Edit.vue";
 import ProductCreate from "./components/product/Create.vue";
 import Forms from './components/Forms.vue';
+import Notes from "./components/Notes.vue";
 
 export const routes = [
     {
@@ -35,5 +36,10 @@ export const routes = [
         name: "forms_url",
         path: "/product_forms",
         component: Forms
+    },
+    {
+        name: "notes_url",
+        path: "/product_notes",
+        component: Notes
     }
 ];

@@ -13,7 +13,9 @@ export default {
             paginate_data: [],
             current_page: 1,
             previous_disabled: true,
-            next_disabled: false
+            next_disabled: false,
+            start: 0,
+            end: 0
         }
     },
     mounted(){
@@ -48,10 +50,10 @@ export default {
             return Math.ceil(this.products.length / this.items_page);
         },
         getDataPage(page_num){
-            let start = (page_num * this.items_page) - this.items_page;
-            let end = (page_num * this.items_page);
+            this.start = (page_num * this.items_page) - this.items_page;
+            this.end = (page_num * this.items_page) < this.products.length ? (page_num * this.items_page) : this.products.length;
             let total_pages = this.calculate_page_total();
-            this.paginate_data = this.products.slice(start, end);
+            this.paginate_data = this.products.slice(this.start, this.end);
             this.current_page = page_num;
             
             if((this.current_page + 1) >  total_pages){
@@ -74,7 +76,6 @@ export default {
         },
         getNextPage(){
             let next_page = this.current_page + 1;
-            let total_pages = this.calculate_page_total();
             this.getDataPage(next_page);
         },
     },
@@ -96,7 +97,7 @@ export default {
     
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-bordered">
                         <thead class="bg-warning text-white">
                             <tr>
                                 <th>ID</th>
@@ -106,21 +107,25 @@ export default {
                                 <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tbody v-for="product in paginate_data" :key="product.id">
+                        <tbody v-for="product in paginate_data" :key="product.id" :class="['table-striped']">
                             <table-row :id="product.id" :name="product.name" :description="product.description" :price="product.price"/>
                         </tbody>
                     </table>
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                          <li :class="[{'disabled': previous_disabled}, 'page-item']">
-                            <a @click="getPreviousPage()" class="page-link" href="#" tabindex="-1">Previous</a>
-                          </li>
-                          <li class="page-item" v-for="item in calculate_page_total()" :key="item" @click="getDataPage(item)"><a class="page-link" href="#">{{ item }}</a></li>
-                          <li v-bind:class="[{'disabled': next_disabled}, 'page-item']">
-                            <a @click="getNextPage()" class="page-link" href="#">Next</a>
-                          </li>
-                        </ul>
-                    </nav>
+                    <div style="display: flex; justify-content: space-between;">
+                        <p v-if="products.length > 0 && paginate_data.length > 0">Mostrando del {{ start + 1 }} al {{ end }} de un total de {{ products.length }} registros</p>   
+                        <p v-else>No hay informaci&oacute;n para mostrar</p>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                            <li :class="[{'disabled': previous_disabled}, 'page-item']">
+                                <a @click="getPreviousPage()" class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item" v-for="item in calculate_page_total()" :key="item" @click="getDataPage(item)"><a class="page-link" href="#">{{ item }}</a></li>
+                            <li v-bind:class="[{'disabled': next_disabled}, 'page-item']">
+                                <a @click="getNextPage()" class="page-link" href="#">Next</a>
+                            </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
