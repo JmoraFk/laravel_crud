@@ -15,6 +15,9 @@ export default {
         <h1>Componente <span class="badge bg-primary">CONTACTO</span></h1>
       </div>
     </div>
+    <div class="row">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

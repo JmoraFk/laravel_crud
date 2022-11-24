@@ -16,5 +16,15 @@ module.exports = {
         },
     },
 
+    variants: {
+        extend: {
+            backgroundColor: ["active", "hover", "disabled"],
+            textColor: ["active", "hover", "disabled"],
+            outline: ["hover", "active"],
+            opacity: ["disabled"],
+            cursor: ["hover", "disabled"]
+        }
+    },
+
     plugins: [require('@tailwindcss/forms')],
 };

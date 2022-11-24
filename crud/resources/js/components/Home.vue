@@ -7,11 +7,19 @@ export default {
     CardElement
   },
   data() {
+    console.log("Data");
     return {
       products: [],
     }
   },
+  setup(props, context) {
+    console.log("Setup function");
+    console.log(props);
+    console.log(context);
+
+  },
   mounted() {
+    console.log("cmounted");
     this.get_products();
   },
   methods: {

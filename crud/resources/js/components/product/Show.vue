@@ -34,7 +34,6 @@ export default {
             this.getDataPage(1);
         },
         delete_product(product_id){
-            console.log(product_id);
             let response = confirm("Eliminar el producto");
             if(response ){
                 this.axios.delete("api/product/" + product_id)
@@ -108,7 +107,7 @@ export default {
                             </tr>
                         </thead>
                         <tbody v-for="product in paginate_data" :key="product.id" :class="['table-striped']">
-                            <table-row :id="product.id" :name="product.name" :description="product.description" :price="product.price"/>
+                            <table-row @delete_product="delete_product" :id="product.id" :name="product.name" :description="product.description" :price="product.price"/>
                         </tbody>
                     </table>
                     <div style="display: flex; justify-content: space-between;">

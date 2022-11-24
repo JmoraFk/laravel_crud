@@ -53,18 +53,25 @@ export default {
     },
     methods: {
         async show_product(){
-            let product_id = this.$route.query.id;
-            await this.axios.get("api/product/" + product_id)
-                .then(response => {
-                    const {name, description, price, created_by, last_updated} = response.data.product;
-                    this.product.name = name;
-                    this.product.description = description;
-                    this.product.price = price;
-                    console.log("Debio poner la info");
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            console.log(this.$route.params);
+            if(Object.keys(this.$route.params).includes("product_id") && this.$route.params.product_id !== ''){
+                let product_id = this.$route.params.product_id;
+                let api_url = `/api/product/${product_id}`;
+                await this.axios.get(api_url)
+                    .then(response => {
+                        const {name, description, price, created_by, last_updated} = response.data.product;
+                        this.product.name = name;
+                        this.product.description = description;
+                        this.product.price = price;
+                        console.log("Debio poner la info");
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+            else{
+                console.log("No se encoentro ningun parametro en la url");
+            }
         },
         async edit_product(){
             let product_id = this.$route.query.id;
